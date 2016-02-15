@@ -1,0 +1,17 @@
+<% @posts.each do |post| %>
+  <div class="post_wrapper">
+    <h2 class="title"><%= link_to post.title, post %></h2>
+    <p class="date"><%= post.created_at.strftime("%B, %D, %Y") %></p>
+    <p><b>Category:</b>
+    <% post.categories.each do |category| %>
+      <%= category.name %>
+    <% end %></p>
+    <p class="image"><%= image_tag post.image.url(:thumb), class: "img-rounded" %></p>
+    <% if current_user %>
+      <%= link_to favourite_post_path(post), class: favourite_post(post) do %>
+        <p>Like <i class = "glyphicon glyphicon-star-empty"></i></p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+<p><center><%= will_paginate @posts %></center></p>

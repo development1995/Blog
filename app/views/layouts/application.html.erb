@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Raleway:400,700' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="sidebar">
+      <div id="logo", class: "img-rounded">
+        <%= link_to root_path do %>
+          <%= image_tag "logo.png" %>
+        <% end %>
+      </div>
+      <ul>
+        <li class="category">Website</li>
+        <li><%= link_to "Blog",  root_path %></li>
+        <li><%= link_to "About", about_path  %></li>
+        <li><%= link_to "My Account", current_user %></li>
+      </ul>
+      <ul>
+        <li class="category ">Social</li>
+        <li><a href = "http://vk.com/a.pedorenko">VKontakte</a></li>
+        <li><a href = "https://www.facebook.com/pedorenko.andriu?ref=bookmarks">Facebook</a></li>
+        <li><a href = "https://bitbucket.org/andreu_pedorenko1995">Bitbucket</a></li>
+        <li><a href = "mailto:pedorenko.andriu@ukr.net">Email</a></li>
+      </ul>
+      <% if current_user.try(:admin?) %>
+        <p class="sign_in"><%= link_to "Admin_Users", users_path %></p>
+      <% end %>
+    </div>
+    <div id="main_content">
+      <div id="header">
+        <p>All Posts</p>
+        <div class="buttons">
+          <button class="button"><%= link_to "New Post", new_post_path %></button>
+            <% if current_user %>
+              <%= image_tag current_user.avatar.url(:avat), class: "img-circle" %>
+              Logged in as <%= current_user.email %>.
+                <% if current_user.try(:admin?) %>
+                  <p>Admin</p>
+                <% else %>
+                  <p>User</p>
+                <% end %>
+              <button class="button"><%= link_to "Log out", log_out_path %></button>
+              <% else %>
+              <button class="button"><%= link_to "Sign up", sign_up_path %></button> or
+              <button class="button"><%= link_to "log in", log_in_path %></button>
+            <% end %>
+        </div>
+      </div>
+        <% flash.each do |name, msg| %>
+        <%= content_tag(:div, msg, class: "alert") %>
+        <%end%>
+        <%= yield %>
+    </div>
+  </body>
+</html>
+
+
+<% if current_user.try(:admin?) %>
+<p><b>Admin</b></p>
+<% else %>
+<p><b>User</b></p>
+<% end %>

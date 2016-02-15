@@ -1,0 +1,14 @@
+<div id="page_wrapper">
+<h1><center>My Account</center></h1>
+<center>
+  <p> 
+    <%= image_tag current_user.avatar.url(:avat) %>
+    <%= @user.name %>
+    <%= @user.lastname %>
+    </p>
+    <p>
+    <button type="buttonss" class="btn btn-primary"><%= link_to 'Edit_user', edit_user_path(@user) %></button>
+
+  </p>
+  </center>
+</div>

@@ -1,0 +1,31 @@
+<div id="page_wrapper">
+  <b><center>All Users</center></b>
+  <br>
+    <table class="table table-bordered">
+    <tr>
+      <td>№</td>
+      <td>User</td>
+      <td>Email</td>
+      <td>Avatar</td>
+      <td>Make</td>
+    </tr>
+    <% @users.each do |user| %>
+      <div class="user_wrapper">
+        <tr>
+          <td><%=user.id%></td>
+          <td><%=link_to user.name + " " + user.lastname, user %></td>
+          <td><%=user.email%></td>
+          <td><%=image_tag user.avatar.url(:avat), class: "img-circle"%></td>
+          <td>
+            <% if user.admin %>
+            <%= link_to 'user', change_permission_user_path(user), class: "label label-primary"%>
+            <% else %>
+            <%= link_to 'admin', change_permission_user_path(user), class: "label label-danger" %>
+            <% end %>
+          </td>
+        </tr>
+      </div>
+    <% end %>
+    </table>
+  <p><center><%= will_paginate @users %></center></p>
+</div>
